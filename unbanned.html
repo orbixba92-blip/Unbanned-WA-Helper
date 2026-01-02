@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>WA Unban Helper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background:#0f172a;
+      color:#e5e7eb;
+      font-family:Arial, sans-serif;
+      padding:20px;
+    }
+    .box {
+      max-width:420px;
+      margin:auto;
+      background:#020617;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 0 20px #000;
+    }
+    h2 { text-align:center; color:#22c55e; }
+    input, textarea, select, button {
+      width:100%;
+      margin-top:10px;
+      padding:12px;
+      border-radius:8px;
+      border:none;
+      font-size:14px;
+    }
+    button {
+      background:#22c55e;
+      color:#000;
+      font-weight:bold;
+      cursor:pointer;
+    }
+    .note {
+      font-size:12px;
+      opacity:.7;
+      margin-top:10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>WA Unban Helper</h2>
+
+  <input id="phone" placeholder="Nomor WhatsApp (+62xxxx)">
+  <input id="email" placeholder="Email aktif">
+
+  <select id="reason">
+    <option>Nomor saya dibanned tanpa alasan jelas</option>
+    <option>Saya korban report massal</option>
+    <option>Saya tidak melanggar kebijakan WhatsApp</option>
+    <option>Saya menggunakan WhatsApp secara pribadi</option>
+  </select>
+
+  <textarea id="extra" placeholder="Penjelasan tambahan (opsional)"></textarea>
+
+  <button onclick="sendAppeal()">Kirim Banding Resmi</button>
+
+  <div class="note">
+    Tool ini hanya membantu menyusun pesan banding.
+    Keputusan unban sepenuhnya milik WhatsApp.
+  </div>
+</div>
+
+<script>
+function sendAppeal() {
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
+  const reason = document.getElementById("reason").value;
+  const extra = document.getElementById("extra").value;
+
+  if(!phone || !email){
+    alert("Lengkapi nomor dan email!");
+    return;
+  }
+
+  const subject = encodeURIComponent("Appeal WhatsApp Account Banned");
+  const body = encodeURIComponent(
+`Hello WhatsApp Support,
+
+My WhatsApp account with number:
+${phone}
+
+has been banned.
+
+Reason:
+${reason}
+
+Additional explanation:
+${extra || "-"}
+
+I believe this ban was a mistake. I am using WhatsApp for personal communication and I do not violate WhatsApp policies.
+
+Please kindly review my account.
+
+Thank you.
+
+Email: ${email}`
+  );
+
+  window.location.href =
+    `mailto:support@whatsapp.com?subject=${subject}&body=${body}`;
+}
+</script>
+
+</body>
+      </html>
