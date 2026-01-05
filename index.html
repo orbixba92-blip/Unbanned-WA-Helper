@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pendaftaran AFAMTEAM</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;font-family:Poppins}
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:#fff;
+}
+.container{
+  max-width:600px;
+  margin:30px auto;
+  padding:20px;
+}
+.card{
+  background:#111;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:20px;
+}
+.logo{
+  text-align:center;
+}
+.logo h1{
+  font-size:48px;
+  margin:0;
+  color:#ffd700;
+}
+.logo p{
+  margin:0;
+  color:#fff;
+}
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+}
+input{
+  background:#1e1e1e;
+  color:#fff;
+}
+button{
+  background:#ffd700;
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
+}
+.hidden{display:none}
+a{
+  color:#ffd700;
+  font-weight:600;
+  text-decoration:none;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+th,td{
+  border:1px solid #333;
+  padding:8px;
+  text-align:left;
+}
+th{
+  background:#ffd700;
+  color:#000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGO -->
+<div class="logo">
+  <h1>👑 AT</h1>
+  <p>AFAMTEAM</p>
+</div>
+
+<!-- FORM -->
+<div class="card" id="formBox">
+  <h3>Pendaftaran Member AFAMTEAM</h3>
+
+  <input id="nama" placeholder="Nama Lengkap">
+  <input id="umur" placeholder="Umur">
+  <input id="asal" placeholder="Asal Daerah">
+  <input id="username" placeholder="Username Game (Roblox)">
+
+  <button onclick="daftar()">Kirim Pendaftaran</button>
+</div>
+
+<!-- SUCCESS -->
+<div class="card hidden" id="successBox">
+  <h3>✅ Pendaftaran Berhasil</h3>
+  <p>Semoga betah di grup AFAMTEAM 🤝🔥</p>
+
+  <p>Silakan gabung ke grup WhatsApp:</p>
+  <a href="https://chat.whatsapp.com/GXp8naBALf26BfQLcGmYKE" target="_blank">
+    👉 GABUNG GRUP WHATSAPP
+  </a>
+</div>
+
+<!-- ADMIN -->
+<div class="card">
+  <h3>🔐 Mode Admin</h3>
+  <input id="pw" placeholder="Password Admin">
+  <button onclick="adminLogin()">Masuk Admin</button>
+
+  <div id="adminPanel" class="hidden">
+    <h4>📋 Data Pendaftar</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Umur</th>
+          <th>Asal</th>
+          <th>Username Game</th>
+        </tr>
+      </thead>
+      <tbody id="dataTable"></tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("afamData")) || [];
+
+function daftar(){
+  if(!nama.value || !umur.value || !asal.value || !username.value){
+    alert("Harap isi semua data!");
+    return;
+  }
+
+  data.push({
+    nama:nama.value,
+    umur:umur.value,
+    asal:asal.value,
+    username:username.value
+  });
+
+  localStorage.setItem("afamData", JSON.stringify(data));
+
+  formBox.classList.add("hidden");
+  successBox.classList.remove("hidden");
+}
+
+function adminLogin(){
+  if(pw.value !== "mintol"){
+    alert("Password salah!");
+    return;
+  }
+
+  adminPanel.classList.remove("hidden");
+  dataTable.innerHTML="";
+
+  data.forEach(d=>{
+    dataTable.innerHTML += `
+      <tr>
+        <td>${d.nama}</td>
+        <td>${d.umur}</td>
+        <td>${d.asal}</td>
+        <td>${d.username}</td>
+      </tr>
+    `;
+  });
+}
+</script>
+
+</body>
+</html>
